@@ -1,0 +1,7 @@
+data stucture
+building [
+code:
+name:
+latitude:
+longitude:
+]
