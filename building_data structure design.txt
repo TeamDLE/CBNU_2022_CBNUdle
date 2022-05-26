@@ -1,7 +1,6 @@
-data stucture
-building [
-code:
-name:
-latitude:
-longitude:
+building:[
+{code:AAA name:BBB latitude:CCC longitude:DDD},
+{code:AAA name:BBB latitude:CCC longitude:DDD},
+{code:AAA name:BBB latitude:CCC longitude:DDD}
+...
 ]
