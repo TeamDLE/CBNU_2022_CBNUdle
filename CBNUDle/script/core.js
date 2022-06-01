@@ -12,7 +12,7 @@ function isCorrect(building)
 
     if(answerLat == guessLat && answerLong == guessLong)
     {
-        return 0;
+        return 0 + ",🎉"; 
     }
     else
     {

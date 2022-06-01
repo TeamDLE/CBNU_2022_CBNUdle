@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <meta charsret="utf-8" />
+    <title>Team DLE</title>
+    <script>
+      var building = 
+        [
+            {"Building_Code":"N10","Building_Name":"대학 본부,국제교류원"},
+            {"Building_Code":"N12","Building_Name":"중앙도서관"},
+            {"Building_Code":"N13","Building_Name":"경영학관"},
+            {"Building_Code":"N14","Building_Name":"인문사회관(강의동)"},
+            {"Building_Code":"N15","Building_Name":"사회과학대학본관"},
+            {"Building_Code":"N16-1","Building_Name":"인문대학본관"},
+            {"Building_Code":"N16-3","Building_Name":"미술과"},
+            {"Building_Code":"N17-3","Building_Name":"개성재(진리관)"},
+            {"Building_Code":"N18","Building_Name":"법학관"},
+            {"Building_Code":"E1-2","Building_Name":"사범대학강의동"},
+            {"Building_Code":"E2","Building_Name":"개신문화관"},
+            {"Building_Code":"E3","Building_Name":"제1학생회관"},
+            {"Building_Code":"E3-1","Building_Name":"NH관"},
+            {"Building_Code":"E4-1","Building_Name":"실내체육관"},
+            {"Building_Code":"E5","Building_Name":"123학군단"},
+            {"Building_Code":"E7-1","Building_Name":"의과대학"},
+            {"Building_Code":"E8-1","Building_Name":"공학관(공과대학 본관)"},
+            {"Building_Code":"E8-3","Building_Name":"건설공학관"},
+            {"Building_Code":"E8-6","Building_Name":"토목공학관"},
+            {"Building_Code":"E8-7","Building_Name":"전자정보1관"},
+            {"Building_Code":"E12-1","Building_Name":"수의과대학및동물의료센터"},
+            {"Building_Code":"S1-2","Building_Name":"자연과학대학"},
+            {"Building_Code":"S2","Building_Name":"전산정보원"},
+            {"Building_Code":"S4-1","Building_Name":"전자정보3관"},
+            {"Building_Code":"S8","Building_Name":"야외공연장"},
+            {"Building_Code":"S9","Building_Name":"박물관"},
+            {"Building_Code":"S17-1","Building_Name":"양성재(지선관)"},
+            {"Building_Code":"S21-4","Building_Name":"농학관 강의동"}
+        ];
+      $(function() 
+      {
+        for (var i = 0; i < building.length; i++) 
+        {
+          let temp_html = '<div class="listInner"><a href="building/' + building[i].Building_Code + '.htm"><img src="../image/' + building[i].Building_Code + '.jpg" height="200" width="300" /></a><p>'+building[i].Building_Name+'<p></div>';
+          $('.listBox').append(temp_html);
+        }
+      });
+    </script>
+    <style>
+        body {
+          background: #1b2849
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="main" type="button"><a href="../index.html"><img src="../../image/2.jpg" height="50" width="50" /></a></div>
+
+    <div class="listBox">
+
+    </div>
+</body>
+</html>

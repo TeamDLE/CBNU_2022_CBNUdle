@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <meta charsret="utf-8" />
+    <title>Team DLE</title>
+    <link rel="stylesheet" href="../style/style.css">
+
+    <script>
+      //건물데이터 불러오기
+      var building = 
+      [{"key":1,"building_Code":"N10","building_Name":"대학 본부,국제교류원","latitude":36.629976,"longitude":127.455165},
+      {"key":2,"building_Code":"N12","building_Name":"중앙도서관","latitude":36.629976,"longitude":127.455165},
+      {"key":3,"building_Code":"N13","building_Name":"경영학관","latitude":36.611170,"longitude":127.471715},
+      {"key":4,"building_Code":"N14","building_Name":"인문사회관(강의동)","latitude":36.630988,"longitude":127.456510},
+      {"key":5,"building_Code":"N15","building_Name":"사회과학대학본관","latitude":36.629775,"longitude":127.457655},
+      {"key":6,"building_Code":"N16-1","building_Name":"인문대학본관","latitude":36.630025,"longitude":127.458740},
+      {"key":7,"building_Code":"N16-3","building_Name":"미술과","latitude":36.630698,"longitude":127.458337},
+      {"key":8,"building_Code":"N17-3","building_Name":"개성재(진리관)","latitude":36.631004,"longitude":127.457761},
+      {"key":9,"building_Code":"N18","building_Name":"법학관","latitude":36.631681,"longitude":127.454547},
+      {"key":10,"building_Code":"E1-2","building_Name":"사범대학강의동","latitude":36.628941,"longitude":127.460918},
+      {"key":11,"building_Code":"E2","building_Name":"개신문화관","latitude":36.628319,"longitude":127.459351},
+      {"key":12,"building_Code":"E3","building_Name":"제1학생회관","latitude":36.627587,"longitude":127.459073},
+      {"key":13,"building_Code":"E3-1","building_Name":"NH관","latitude":36.627245,"longitude":127.459403},
+      {"key":14,"building_Code":"E4-1","building_Name":"실내체육관","latitude":36.627215,"longitude":127.460593},
+      {"key":15,"building_Code":"E5","building_Name":"123학군단","latitude":36.627139,"longitude":127.461615},
+      {"key":16,"building_Code":"E7-1","building_Name":"의과대학","latitude":36.625081,"longitude":127.460956},
+      {"key":17,"building_Code":"E8-1","building_Name":"공학관(공과대학 본관)","latitude":36.627097,"longitude":127.458160},
+      {"key":18,"building_Code":"E8-3","building_Name":"건설공학관","latitude":36.626010,"longitude":127.458459},
+      {"key":19,"building_Code":"E8-6","building_Name":"토목공학관","latitude":36.624542,"longitude":127.458464},
+      {"key":20,"building_Code":"E8-7","building_Name":"전자정보1관","latitude":36.625643,"longitude":127.457657},
+      {"key":21,"building_Code":"E12-1","building_Name":"수의과대학및동물의료센터","latitude":36.623181,"longitude":127.456207},
+      {"key":22,"building_Code":"S1-2","building_Name":"자연과학대학","latitude":36.627156,"longitude":127.456989},
+      {"key":23,"building_Code":"S2","building_Name":"전산정보원","latitude":36.626248,"longitude":127.455469},
+      {"key":24,"building_Code":"S4-1","building_Name":"전자정보3관","latitude":36.625622,"longitude":127.454468},
+      {"key":25,"building_Code":"S8","building_Name":"야외공연장","latitude":36.626860,"longitude":127.453959},
+      {"key":26,"building_Code":"S9","building_Name":"박물관","latitude":36.627650,"longitude":127.455518},
+      {"key":27,"building_Code":"S17-1","building_Name":"양성재(지선관)","latitude":36.627610,"longitude":127.452403},
+      {"key":28,"building_Code":"S21-4","building_Name":"농학관 강의동","latitude":36.629442,"longitude":127.452639}]; 
+      $(function() 
+      {
+        for (var i = 0; i < building.length; i++) 
+        {
+          let temp_html = '<div class="listInner"><span class="country">'+ building[i].building_Code + '</span>&nbsp;<span class="city">' + building[i].building_Name + '</span></div>';
+          $('.listBox').append(temp_html);
+          console.log("Code: " + building[i].building_Code + " Name: " + building[i].building_Name);
+        }
+      });
+      //답안지부분 검색
+      function guess_filter() 
+      {
+        let search = document.getElementById("search").value.toLowerCase();
+        let listInner = document.getElementsByClassName("listInner");
+
+        for (let i = 0; i < listInner.length; i++) 
+        {
+          city = listInner[i].getElementsByClassName("city");
+          country = listInner[i].getElementsByClassName("country");
+          if (city[0].innerHTML.toLowerCase().indexOf(search) != -1 || country[0].innerHTML.toLowerCase().indexOf(search) != -1) 
+          {
+            listInner[i].style.display = "flex"
+          }
+          else 
+          {
+            listInner[i].style.display = "none"
+          }
+        }
+      }
+    </script>
+</head>
+
+<body>
+    <div1>
+        <img src="../image/cbnudle.jpg" height="100" width="500" />
+
+    </div1>
+    <hr align=left width=1550 color=white SIZE=8>
+
+    <div class="howtoplay" type="button"><!-- 하는 방법을 오버레이로 띄운다.--></div>
+    <div class="building" type="button"><a href="building/BuildingList.html"><img src="../image/2.jpg" height="50" width="50" /></a></div>
+
+    <!--Building Section-->
+    <!-- DB에서 오늘의 건물을 가져왔다면 그 건물 코드를 가져와서 image안에 있는 해당 건물 사진을 가져옴. 
+    아니면... 랜덤 건물사진을 가져와서 연속 정답?-->
+    <script>
+        
+    </script>
+    <div class ="building_image">
+        <img src="../image/100.png" height="200" width="400" />
+    </div>
+
+    <!--Try Section-->
+    <div class ="try_1">
+        <div class="t1_building"></div>
+        <div class="t1_distance"></div>
+        <div class="t1_direction"></div>
+    </div>
+    <div class="try_2">
+        <div class="t2_building"></div>
+        <div class="t2_distance"></div>
+        <div class="t2_direction"></div>
+    </div>
+    <div class="try_3">
+        <div class="t3_building"></div>
+        <div class="t3_distance"></div>
+        <div class="t3_direction"></div>
+    </div>
+    <div class="try_4">
+        <div class="t4_building"></div>
+        <div class="t4_distance"></div>
+        <div class="t4_direction"></div>
+    </div>
+    <div class="try_5">
+        <div class="t5_building"></div>
+        <div class="t5_distance"></div>
+        <div class="t5_direction"></div>
+    </div>
+
+
+    <div class="searchBox">
+        <input type="text" id="search" onkeyup="guess_filter()" placeholder="여기는 어디일까요..." />
+    </div>
+  
+    <div class="listBox">
+    </div>
+    <!-- 게임 스크립트 -->
+    <script>
+      //랜덤으로 정답을 하나 고른다.
+      //답을 고르고 정답인지 확인한다.
+      //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
+      //정답이면 결과창을 띄운다.
+      //정답이거나 기회가 0이 되면 결과창이 overlay 된다.
+    </script>
+</body>
+</html>
