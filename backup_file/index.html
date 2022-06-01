@@ -41,24 +41,31 @@
       {
         for (var i = 0; i < building.length; i++) 
         {
-          let temp_html = '<option value="' + building[i].building_Code + '">' + building[i].building_Code + ' ' + building[i].building_Name + '</option>';
+          let temp_html = '<div class="listInner"><span class="country">'+ building[i].building_Code + '</span>&nbsp;<span class="city">' + building[i].building_Name + '</span></div>';
           $('.listBox').append(temp_html);
+          console.log("Code: " + building[i].building_Code + " Name: " + building[i].building_Name);
         }
-
       });
-      
-      var randomKey = Math.floor(Math.random() * 29);
-      var answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
-      //건물 이미지 로딩
-      let buildingImage = '<img src="../image/'+ answer.building_Code +'.png" height="200" width="400" />';
+      //답안지부분 검색
+      function guess_filter() 
+      {
+        let search = document.getElementById("search").value.toLowerCase();
+        let listInner = document.getElementsByClassName("listInner");
 
-      $(function(){$('.building_image').append(buildingImage);});
-      var tryCount = 1;
-      
-      //답을 고르고 정답인지 확인한다.
-      // isCorrect를 사용해서 정답이 맞는지를 확인하고, 0이면 정답처리, 0이 아니면 들어온 거리와 방향정보를 띄우고 기회 하나를 차감한다.
-      var answerLat = answer.latitude;
-      var answerLong = answer.longitude;
+        for (let i = 0; i < listInner.length; i++) 
+        {
+          city = listInner[i].getElementsByClassName("city");
+          country = listInner[i].getElementsByClassName("country");
+          if (city[0].innerHTML.toLowerCase().indexOf(search) != -1 || country[0].innerHTML.toLowerCase().indexOf(search) != -1) 
+          {
+            listInner[i].style.display = "flex"
+          }
+          else 
+          {
+            listInner[i].style.display = "none"
+          }
+        }
+      }
     </script>
 </head>
 <header>
@@ -72,7 +79,23 @@
     <!--Building Section-->
     <!-- DB에서 오늘의 건물을 가져왔다면 그 건물 코드를 가져와서 image안에 있는 해당 건물 사진을 가져옴. 
     아니면... 랜덤 건물사진을 가져와서 연속 정답?-->
+      <script>
+      const randomKey = Math.floor(Math.random() * 29);
+      const answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
+
+      //건물 이미지 로딩
+      const buildingImage = '<img src="../image/'+ answer.building_Code +'.png" height="200" width="400" />';
+      $(".building_image").append(buildingImage);
+      var tryCount = 1;
+      //답을 고르고 정답인지 확인한다.
+      // isCorrect를 사용해서 정답이 맞는지를 확인하고, 0이면 정답처리, 0이 아니면 들어온 거리와 방향정보를 띄우고 기회 하나를 차감한다.
+
+      var answerLat = answer.latitude;
+      var answerLong = answer.longitude;
+      </script>
+
     <div class ="building_image">
+
     </div>
 
     <!--Try Section-->
@@ -101,71 +124,71 @@
         <div class="t5_distance"></div>
         <div class="t5_direction"></div>
     </div>
-    <div class="try">
-      <div class="t6_building"></div>
-      <div class="t6_distance"></div>
-      <div class="t6_direction"></div>
-  </div>
-    <div id="guess_submit">
-      <select class="listBox" id="building_list">
-      </select>
-      <input type="button" onclick="guess_answer()" value="제출" />
+
+
+    <div class="searchBox">
+      <!-- 버튼을 누르면 input에 있는 텍스트 정보를 function으로 전달한다.
+        <input type="text" id="search" onkeyup="guess_filter()" placeholder="여기는 어디일까요..." />
+        <input type="submit" value="제출" />
+      -->
+      <form>
+        <select name="list" >
+          <option value="">한국어</option>
+          <option value="english">영어</option>
+          <option value="chinese">중국어</option>
+          <option value="spanish">스페인어</option>
+        </select>
+      </form>
     </div>
-    
+  
+    <div class="listBox">
+    </div>
     <!-- 게임 스크립트 -->
     <script>
-        function guess_answer()
+      //building에서 건물 이름을 찾는다.
+      var b_raw = document.getElementById("search").value;
+      var b_code = b_raw.split(",")[0];
+      var guessLat, guessLong;
+      $.each(building, function(i, item) 
+      {
+        if (item.building_Code == b_code) 
         {
-          //building에서 건물 이름을 찾는다.
-          var b_raw = document.getElementById("building_list").options[document.getElementById("building_list").selectedIndex].value;
-          console.log(b_raw);
-          var b_code = b_raw.split(",")[0];
-          var guessLat, guessLong, guessCode, guessName;
-          $.each(building, function(i, item) 
-          {
-            if (item.building_Code == b_code) 
-            {
-              guessLat = item.latitude;
-              guessLong = item.longitude;
-              guessCode = item.building_Code;
-              guessName = item.building_Name;
-            }
-          });
+          guessLat = item.latitude;
+          guessLong = item.longitude;
+        }
+      });
 
-          var result = isCorrect(answerLat, answerLong, guessLat, guessLong);
-          //result에 전달된 string을 ,를 기준으로 파싱합니다.
-          var resultArray = result.split(",");
-          console.log(resultArray);
+        var result = isCorrect(answerLat, answerLong, guessLat, guessLong);
+        //result에 전달된 string을 ,를 기준으로 파싱합니다.
+        var resultArray = result.split(",");
 
-          if (resultArray[0] == 0)
-          {
+        if (resultArray[0] == 0)
+        {
           //정답이면 결과창을 띄운다.
           let tryBuilding = ".t"+tryCount+"_building";
           let tryDistance = ".t"+tryCount+"_distance";
           let tryDirection = ".t"+tryCount+"_direction";
 
-          $(tryBuilding).append(guessCode + ' ' + guessName);
+          $(tryBuilding).append(b_raw);
           $(tryDistance).append(resultArray[0] + "m");
           $(tryDirection).append(resultArray[1]);
-          //return 0;
-          }
-          else //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
-          {
-            let tryBuilding = ".t"+tryCount+"_building";
-            let tryDistance = ".t"+tryCount+"_distance";
-            let tryDirection = ".t"+tryCount+"_direction";
 
-            $(tryBuilding).append(guessCode + ' ' + guessName);
-            $(tryDistance).append(resultArray[0] + "m");
-            $(tryDirection).append(resultArray[1]);
-            tryCount++;
-            if (tryCount > 6){};
-          }
-          //정답이거나 기회가 소진되면 결과창이 overlay 된다.
-          //결과 -> 공유, 다시하기, 건물정보 보기
+          //return 0;
         }
-     
-      
+        else //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
+        {
+          let tryBuilding = ".t"+tryCount+"_building";
+          let tryDistance = ".t"+tryCount+"_distance";
+          let tryDirection = ".t"+tryCount+"_direction";
+
+          $(tryBuilding).append(b_raw);
+          $(tryDistance).append(resultArray[0] + "m");
+          $(tryDirection).append(resultArray[1]);
+          tryCount++;
+          if (tryCount > 5){};
+        }
+      //정답이거나 기회가 소진되면 결과창이 overlay 된다.
+      //결과 -> 공유, 다시하기, 건물정보 보기
     </script>
 </body>
 </html>
