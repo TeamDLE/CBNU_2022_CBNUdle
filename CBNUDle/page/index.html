@@ -88,27 +88,27 @@
     </div>
 
     <!--Try Section-->
-    <div class ="try_1">
+    <div class ="try">
         <div class="t1_building"></div>
         <div class="t1_distance"></div>
         <div class="t1_direction"></div>
     </div>
-    <div class="try_2">
+    <div class="try">
         <div class="t2_building"></div>
         <div class="t2_distance"></div>
         <div class="t2_direction"></div>
     </div>
-    <div class="try_3">
+    <div class="try">
         <div class="t3_building"></div>
         <div class="t3_distance"></div>
         <div class="t3_direction"></div>
     </div>
-    <div class="try_4">
+    <div class="try">
         <div class="t4_building"></div>
         <div class="t4_distance"></div>
         <div class="t4_direction"></div>
     </div>
-    <div class="try_5">
+    <div class="try">
         <div class="t5_building"></div>
         <div class="t5_distance"></div>
         <div class="t5_direction"></div>
@@ -124,6 +124,9 @@
     <!-- 게임 스크립트 -->
     <script>
       //랜덤으로 정답을 하나 고른다.
+      const randomKey = Math.floor(Math.random() * 29);
+      const answer = building[randomKey];
+      var tryCount = 1;
       //답을 고르고 정답인지 확인한다.
       //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
       //정답이면 결과창을 띄운다.
