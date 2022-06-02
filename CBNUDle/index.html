@@ -4,8 +4,8 @@
 <head>
     <meta charsret="utf-8" />
     <title>Team DLE</title>
-    <link rel="stylesheet" href="../style/style.css">
-    <script src="../script/core.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script/core.js"></script>
     <script>
       //건물데이터 불러오기
       var building = 
@@ -44,13 +44,12 @@
           let temp_html = '<option value="' + building[i].building_Code + '">' + building[i].building_Code + ' ' + building[i].building_Name + '</option>';
           $('.listBox').append(temp_html);
         }
-
       });
       
       var randomKey = Math.floor(Math.random() * 29);
       var answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
       //건물 이미지 로딩
-      let buildingImage = '<img src="../image/'+ answer.building_Code +'.png" height="200" width="400" />';
+      let buildingImage = '<img src="image/'+ answer.building_Code +'.png" height="200" width="400" />';
 
       $(function(){$('.building_image').append(buildingImage);});
       var tryCount = 1;
@@ -62,9 +61,9 @@
     </script>
 </head>
 <header>
-<div class="logologo"><img src="../image/cbnudle.jpg" height="100" width="500" /></div>
-<div class="howtoplay" type="button"><!-- 하는 방법을 오버레이로 띄운다.--></div>
-<div class="building" type="button"><a href="building/BuildingList.html"><img src="../image/2.jpg" height="50" width="50" /></a></div>
+<div class="logologo"><img src="image/cbnudle.jpg" height="100" width="500" /></div>
+<div class="howtoplay" type="button" onclick="overlay_Howtoplay()"><img src="image/1.jpg" height="50" width="50" /><!-- 하는 방법을 오버레이로 띄운다.--></div>
+<div class="building" type="button"><a href="page/building/BuildingList.html"><img src="image/2.jpg" height="50" width="50" /></a></div>
 <hr align=left width=1550 color=white SIZE=8>
 </header>
 
@@ -112,8 +111,31 @@
       <input type="button" onclick="guess_answer()" value="제출" />
     </div>
     
+  <!-- 결과창 -->
+  <div class="resultOverlay" style="visibility: hidden;">
+    <h1>끝났습니다!</h1>
+    <span class="answerResult"></span>
+    <span class="tryCount"></span>
+    <input type="button" onclick="location.reload()" value="다시하기" />
+    <!-- SNS 공유하기 -->
+    <div class="sns_share">
+      <a href="#n" onclick="fn_sendFB('facebook');return false;" class="facebook" target="_self" title="페이스북 공유"><img src="image/3.jpg" height="50" width="50" ></a>
+      <a href="#n" onclick="fn_sendFB('twitter');return false;" class="twitter" target="_self" title="트위터 공유"><img src="image/1.jpg" height="50" width="50" ></a>
+    </div>
+  </div>
+
+  <!-- 하는 방법 -->
+  <div class="howtoplayOverlay" style="visibility: hidden;">
+    <h1>하는 방법</h1>
+    <!-- 오버레이 닫기 -->
+    <input type="button" onclick='$(".howtoplayOverlay").css("visibility", "hidden");' value="닫기" />
+  <div>
+
+
+
     <!-- 게임 스크립트 -->
     <script>
+      //코어 기능
         function guess_answer()
         {
           //building에서 건물 이름을 찾는다.
@@ -147,7 +169,7 @@
           $(tryBuilding).append(guessCode + ' ' + guessName);
           $(tryDistance).append(resultArray[0] + "m");
           $(tryDirection).append(resultArray[1]);
-          //return 0;
+          overlay_Result();
           }
           else //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
           {
@@ -159,13 +181,80 @@
             $(tryDistance).append(resultArray[0] + "m");
             $(tryDirection).append(resultArray[1]);
             tryCount++;
-            if (tryCount > 6){};
+            if (tryCount > 6) overlay_Result();
           }
           //정답이거나 기회가 소진되면 결과창이 overlay 된다.
           //결과 -> 공유, 다시하기, 건물정보 보기
         }
-     
-      
+
+     //결과창 오버레이
+     function overlay_Result()
+     {
+      $(".resultOverlay").css("visibility", "visible");
+      $('.resultOverlay').css('display', 'block');
+      $('.resultOverlay').css('opacity', '1');
+      $('.resultOverlay').css('z-index', '1');
+      $('.resultOverlay').css('background-color', 'rgba(0,0,0,0.75)');
+      $('.resultOverlay').css('position', 'absolute');
+      $('.resultOverlay').css('top', '0');
+      $('.resultOverlay').css('left', '0');
+      $('.resultOverlay').css('width', '100%');
+      $('.resultOverlay').css('height', '100%');
+      $('.resultOverlay').css('text-align', 'center');
+      $('.resultOverlay').css('vertical-align', 'middle');
+      $('.resultOverlay').css('line-height', '100%');
+      $('.resultOverlay').css('color', 'white');
+      $('.resultOverlay').css('font-family', 'Nanum Gothic');
+      $('.resultOverlay').css('font-weight', 'bold');
+      $('.resultOverlay').css('text-shadow', '0 0 10px black');
+
+      $(function(){$('.answerResult').append('<p>정답은 "'+ answer.building_Code + ' ' + answer.building_Name +'"입니다.</p>');});
+      if(tryCount != 7) $(function(){$('.tryCount').append('<p>시도 횟수는'+ tryCount + ' 회입니다. 🎉</p>');});
+      else $(function(){$('.tryCount').append('<p>기회 내에 맞추지 못했습니다 😭</p>');});
+     }
+    //하는 방법 오버레이
+    function overlay_Howtoplay()
+    {
+      $(".howtoplayOverlay").css("visibility", "visible");
+      $('.howtoplayOverlay').css('display', 'block');
+      $('.howtoplayOverlay').css('opacity', '1');
+      $('.howtoplayOverlay').css('z-index', '1');
+      $('.howtoplayOverlay').css('background-color', 'rgba(0,0,0,0.75)');
+      $('.howtoplayOverlay').css('position', 'absolute');
+      $('.howtoplayOverlay').css('top', '0');
+      $('.howtoplayOverlay').css('left', '0');
+      $('.howtoplayOverlay').css('width', '100%');
+      $('.howtoplayOverlay').css('height', '100%');
+      $('.howtoplayOverlay').css('text-align', 'center');
+      $('.howtoplayOverlay').css('vertical-align', 'middle');
+      $('.howtoplayOverlay').css('line-height', '100%');
+      $('.howtoplayOverlay').css('color', 'white');
+      $('.howtoplayOverlay').css('font-family', 'Nanum Gothic');
+      $('.howtoplayOverlay').css('font-weight', 'bold');
+      $('.howtoplayOverlay').css('text-shadow', '0 0 10px black');
+    }
+
+
+     //공유
+    function fn_sendFB(sns) 
+    {
+      var thisUrl = document.URL;
+      var snsTitle;
+
+      if(tryCount == 7) snsTitle = answer.building_Code + ' ' + answer.building_Name + "을(를) 알아맞추지 못했습니다... 😭 당신은 충북대학교를 얼마나 잘 알고계신가요? #CBNUDle";
+      else snsTitle =  answer.building_Code + ' ' + answer.building_Name + "을(를) " + tryCount + "번 만에 알아맞췄습니다! 🎉 당신은 충북대학교를 얼마나 잘 알고계신가요? #CBNUDle";;
+
+      if( sns == 'facebook' ) 
+      {
+          var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
+          window.open(url, "", "width=486, height=286");
+      }
+      else if( sns == 'twitter' ) 
+      {
+          var url = "http://twitter.com/share?url="+encodeURIComponent(thisUrl)+"&text="+encodeURIComponent(snsTitle);
+          window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+      }
+    }
     </script>
 </body>
 </html>
