@@ -2,5 +2,31 @@ body
 {
     background: #1b2849;
     text-align: center;
+}
 
+.t1_building, .t2_building, .t3_building, .t4_building, .t5_building, .t6_building
+{
+    display: inline-block;
+    background: #b3b3b3;
+    border: 1px solid #000;
+    height: 25px;
+    width: 300px;
+}
+
+.t1_distance, .t2_distance, .t3_distance, .t4_distance, .t5_distance, .t6_distance
+{
+    display: inline-block;
+    background: #b3b3b3;
+    border: 1px solid #000;
+    height: 25px;
+    width: 100px;
+}
+
+.t1_direction, .t2_direction, .t3_direction, .t4_direction, .t5_direction, .t6_direction
+{
+    display: inline-block;
+    background: #b3b3b3;
+    border: 1px solid #000;
+    height: 25px;
+    width: 75px;
 }
