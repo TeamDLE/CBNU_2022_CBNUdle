@@ -49,7 +49,7 @@
       var randomKey = Math.floor(Math.random() * 29);
       var answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
       //건물 이미지 로딩
-      let buildingImage = '<img src="image/'+ answer.building_Code +'.png" height="200" width="400" />';
+      let buildingImage = '<img src="image/'+ answer.building_Code +'.png" height="300" width="600" />';
 
       $(function(){$('.building_image').append(buildingImage);});
       var tryCount = 1;
@@ -167,7 +167,7 @@
           let tryDirection = ".t"+tryCount+"_direction";
 
           $(tryBuilding).append(guessCode + ' ' + guessName);
-          $(tryDistance).append(resultArray[0] + "m");
+          $(tryDistance).append((Math.round(resultArray[0]*10)/10) + "m");
           $(tryDirection).append(resultArray[1]);
           overlay_Result();
           }
@@ -178,7 +178,7 @@
             let tryDirection = ".t"+tryCount+"_direction";
 
             $(tryBuilding).append(guessCode + ' ' + guessName);
-            $(tryDistance).append(resultArray[0] + "m");
+            $(tryDistance).append((Math.round(resultArray[0]*10)/10) + "m");
             $(tryDirection).append(resultArray[1]);
             tryCount++;
             if (tryCount > 6) overlay_Result();
@@ -209,7 +209,7 @@
       $('.resultOverlay').css('text-shadow', '0 0 10px black');
 
       $(function(){$('.answerResult').append('<p>정답은 "'+ answer.building_Code + ' ' + answer.building_Name +'"입니다.</p>');});
-      if(tryCount != 7) $(function(){$('.tryCount').append('<p>시도 횟수는'+ tryCount + ' 회입니다. 🎉</p>');});
+      if(tryCount != 7) $(function(){$('.tryCount').append('<p>시도 횟수는 '+ tryCount + '회입니다. 🎉</p>');});
       else $(function(){$('.tryCount').append('<p>기회 내에 맞추지 못했습니다 😭</p>');});
      }
     //하는 방법 오버레이
