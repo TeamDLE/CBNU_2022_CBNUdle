@@ -38,40 +38,14 @@ function calc_direction(a_lat, a_long, b_lat, b_long)
 
 function directionTest(brng)
 {
-    if(brng >= 0 && brng <= 22.5)
-    {
-        return "⬆️";
-    }
-    else if(brng > 22.5 && brng <= 67.5)
-    {
-        return "↗️";
-    }
-    else if(brng > 67.5 && brng <= 112.5)
-    {
-        return "➡️";
-    }
-    else if(brng > 112.5 && brng <= 157.5)
-    {
-        return "↘️";
-    }
-    else if(brng > 157.5 && brng <= 202.5)
-    {
-        return "⬇️";
-    }
-    else if(brng > 202.5 && brng <= 247.5)
-    {
-        return "↙️";
-    }
-    else if(brng > 247.5 && brng <= 292.5)
-    {
-        return "⬅️";
-    }
-    else if(brng > 292.5 && brng <= 337.5)
-    {
-        return "↖️";
-    }
-    else if(brng > 337.5 && brng <= 360)
-    {
-        return "⬆️";
-    }
+    if(brng >= 0 && brng <= 22.5){return "⬇️";}
+    else if(brng > 22.5 && brng <= 67.5){return "↘️";}
+    else if(brng > 67.5 && brng <= 112.5){return "➡️";}
+    else if(brng > 112.5 && brng <= 157.5){return "↗️";}
+    else if(brng > 157.5 && brng <= 202.5){return "⬆️";}
+    else if(brng > 202.5 && brng <= 247.5){return "↖️";}
+    else if(brng > 247.5 && brng <= 292.5){return "⬅️";}
+    else if(brng > 292.5 && brng <= 337.5){return "↙️";}
+    else if(brng > 337.5 && brng <= 360){return "⬇️";}
 }
+    
