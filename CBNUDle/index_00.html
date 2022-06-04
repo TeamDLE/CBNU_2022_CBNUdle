@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <meta charsret="utf-8" />
+    <title>Team DLE</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+    <script src="script/core.js"></script>
+    <script>
+      //건물데이터 불러오기
+      var building = 
+      [{"key":1,"building_Code":"N10","building_Name":"대학 본부,국제교류원","latitude":36.629976,"longitude":127.455165},
+      {"key":2,"building_Code":"N12","building_Name":"중앙도서관","latitude":36.629976,"longitude":127.455165},
+      {"key":3,"building_Code":"N13","building_Name":"경영학관","latitude":36.611170,"longitude":127.471715},
+      {"key":4,"building_Code":"N14","building_Name":"인문사회관(강의동)","latitude":36.630988,"longitude":127.456510},
+      {"key":5,"building_Code":"N15","building_Name":"사회과학대학본관","latitude":36.629775,"longitude":127.457655},
+      {"key":6,"building_Code":"N16-1","building_Name":"인문대학본관","latitude":36.630025,"longitude":127.458740},
+      {"key":7,"building_Code":"N16-3","building_Name":"미술과","latitude":36.630698,"longitude":127.458337},
+      {"key":8,"building_Code":"N17-3","building_Name":"개성재(진리관)","latitude":36.631004,"longitude":127.457761},
+      {"key":9,"building_Code":"N18","building_Name":"법학관","latitude":36.631681,"longitude":127.454547},
+      {"key":10,"building_Code":"E1-2","building_Name":"사범대학강의동","latitude":36.628941,"longitude":127.460918},
+      {"key":11,"building_Code":"E2","building_Name":"개신문화관","latitude":36.628319,"longitude":127.459351},
+      {"key":12,"building_Code":"E3","building_Name":"제1학생회관","latitude":36.627587,"longitude":127.459073},
+      {"key":13,"building_Code":"E3-1","building_Name":"NH관","latitude":36.627245,"longitude":127.459403},
+      {"key":14,"building_Code":"E4-1","building_Name":"실내체육관","latitude":36.627215,"longitude":127.460593},
+      {"key":15,"building_Code":"E5","building_Name":"123학군단","latitude":36.627139,"longitude":127.461615},
+      {"key":16,"building_Code":"E7-1","building_Name":"의과대학","latitude":36.625081,"longitude":127.460956},
+      {"key":17,"building_Code":"E8-1","building_Name":"공학관(공과대학 본관)","latitude":36.627097,"longitude":127.458160},
+      {"key":18,"building_Code":"E8-3","building_Name":"건설공학관","latitude":36.626010,"longitude":127.458459},
+      {"key":19,"building_Code":"E8-6","building_Name":"토목공학관","latitude":36.624542,"longitude":127.458464},
+      {"key":20,"building_Code":"E8-7","building_Name":"전자정보1관","latitude":36.625643,"longitude":127.457657},
+      {"key":21,"building_Code":"E12-1","building_Name":"수의과대학및동물의료센터","latitude":36.623181,"longitude":127.456207},
+      {"key":22,"building_Code":"S1-2","building_Name":"자연과학대학","latitude":36.627156,"longitude":127.456989},
+      {"key":23,"building_Code":"S2","building_Name":"전산정보원","latitude":36.626248,"longitude":127.455469},
+      {"key":24,"building_Code":"S4-1","building_Name":"전자정보3관","latitude":36.625622,"longitude":127.454468},
+      {"key":25,"building_Code":"S8","building_Name":"야외공연장","latitude":36.626860,"longitude":127.453959},
+      {"key":26,"building_Code":"S9","building_Name":"박물관","latitude":36.627650,"longitude":127.455518},
+      {"key":27,"building_Code":"S17-1","building_Name":"양성재(지선관)","latitude":36.627610,"longitude":127.452403},
+      {"key":28,"building_Code":"S21-4","building_Name":"농학관 강의동","latitude":36.629442,"longitude":127.452639}]; 
+      $(function() 
+      {
+        for (var i = 0; i < building.length; i++) 
+        {
+          let temp_html = '<option value="' + building[i].building_Code + '">' + building[i].building_Code + ' ' + building[i].building_Name + '</option>';
+          $('.listBox').append(temp_html);
+        }
+      });
+      
+      var randomKey = Math.floor(Math.random() * 29);
+      var answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
+      //건물 이미지 로딩
+      let buildingImage = '<img src="image/'+ answer.building_Code +'.png" height="300" width="600" />';
+
+      $(function(){$('.building_image').append(buildingImage);});
+      var tryCount = 1;
+      
+      //답을 고르고 정답인지 확인한다.
+      // isCorrect를 사용해서 정답이 맞는지를 확인하고, 0이면 정답처리, 0이 아니면 들어온 거리와 방향정보를 띄우고 기회 하나를 차감한다.
+      var answerLat = answer.latitude;
+      var answerLong = answer.longitude;
+    </script>
+</head>
+<header>
+<div class="logologo"><img src="image/cbnudle.jpg" height="100" width="500" /></div>
+<div class="howtoplay" type="button" onclick="overlay_Howtoplay()"><img src="image/1.jpg" height="50" width="50" /><!-- 하는 방법을 오버레이로 띄운다.--></div>
+<div class="building" type="button"><a href="page/BuildingList.html"><img src="image/2.jpg" height="50" width="50" /></a></div>
+<hr align=left width=1550 color=white SIZE=8>
+</header>
+
+<body>
+    <!--Building Section-->
+    <!-- DB에서 오늘의 건물을 가져왔다면 그 건물 코드를 가져와서 image안에 있는 해당 건물 사진을 가져옴. 
+    아니면... 랜덤 건물사진을 가져와서 연속 정답?-->
+    <div class ="building_image">
+    </div>
+
+    <!--Try Section-->
+    <div class ="try">
+        <div class="t1_building"></div>
+        <div class="t1_distance"></div>
+        <div class="t1_direction"></div>
+    </div>
+    <div class="try">
+        <div class="t2_building"></div>
+        <div class="t2_distance"></div>
+        <div class="t2_direction"></div>
+    </div>
+    <div class="try">
+        <div class="t3_building"></div>
+        <div class="t3_distance"></div>
+        <div class="t3_direction"></div>
+    </div>
+    <div class="try">
+        <div class="t4_building"></div>
+        <div class="t4_distance"></div>
+        <div class="t4_direction"></div>
+    </div>
+    <div class="try">
+        <div class="t5_building"></div>
+        <div class="t5_distance"></div>
+        <div class="t5_direction"></div>
+    </div>
+    <div class="try">
+      <div class="t6_building"></div>
+      <div class="t6_distance"></div>
+      <div class="t6_direction"></div>
+  </div>
+    <div id="guess_submit">
+      <select class="listBox" id="building_list">
+      </select>
+      <input type="button" onclick="guess_answer()" value="제출" />
+    </div>
+    
+  <!-- 결과창 -->
+  <div class="resultOverlay" style="visibility: hidden;">
+    <h1>끝났습니다!</h1>
+    <span class="answerResult"></span>
+    <span class="tryCount"></span>
+    <input type="button" onclick="location.reload()" value="다시하기" />
+    <!-- SNS 공유하기 -->
+    <div class="sns_share">
+      <a href="#n" onclick="fn_sendFB('facebook');return false;" class="facebook" target="_self" title="페이스북 공유"><img src="image/3.jpg" height="50" width="50" ></a>
+      <a href="#n" onclick="fn_sendFB('twitter');return false;" class="twitter" target="_self" title="트위터 공유"><img src="image/1.jpg" height="50" width="50" ></a>
+    </div>
+  </div>
+
+  <!-- 하는 방법 -->
+  <div class="howtoplayOverlay" style="visibility: hidden;">
+    <h1>하는 방법</h1>
+    <!-- 오버레이 닫기 -->
+    <input type="button" onclick='$(".howtoplayOverlay").css("visibility", "hidden");' value="닫기" />
+  <div>
+
+
+
+    <!-- 게임 스크립트 -->
+    <script>
+      //코어 기능
+        function guess_answer()
+        {
+          //building에서 건물 이름을 찾는다.
+          var b_raw = document.getElementById("building_list").options[document.getElementById("building_list").selectedIndex].value;
+          console.log(b_raw);
+          var b_code = b_raw.split(",")[0];
+          var guessLat, guessLong, guessCode, guessName;
+          $.each(building, function(i, item) 
+          {
+            if (item.building_Code == b_code) 
+            {
+              guessLat = item.latitude;
+              guessLong = item.longitude;
+              guessCode = item.building_Code;
+              guessName = item.building_Name;
+            }
+          });
+
+          var result = isCorrect(answerLat, answerLong, guessLat, guessLong);
+          //result에 전달된 string을 ,를 기준으로 파싱합니다.
+          var resultArray = result.split(",");
+          console.log(resultArray);
+
+          if (resultArray[0] == 0)
+          {
+          //정답이면 결과창을 띄운다.
+          let tryBuilding = ".t"+tryCount+"_building";
+          let tryDistance = ".t"+tryCount+"_distance";
+          let tryDirection = ".t"+tryCount+"_direction";
+
+          $(tryBuilding).append(guessCode + ' ' + guessName);
+          $(tryDistance).append((Math.round(resultArray[0]*10)/10) + "m");
+          $(tryDirection).append(resultArray[1]);
+          overlay_Result();
+          }
+          else //오답이면 계산된 거리와 방향을 보여주고 기회를 하나 차감한다.
+          {
+            let tryBuilding = ".t"+tryCount+"_building";
+            let tryDistance = ".t"+tryCount+"_distance";
+            let tryDirection = ".t"+tryCount+"_direction";
+
+            $(tryBuilding).append(guessCode + ' ' + guessName);
+            $(tryDistance).append((Math.round(resultArray[0]*10)/10) + "m");
+            $(tryDirection).append(resultArray[1]);
+            tryCount++;
+            if (tryCount > 6) overlay_Result();
+          }
+          //정답이거나 기회가 소진되면 결과창이 overlay 된다.
+          //결과 -> 공유, 다시하기, 건물정보 보기
+        }
+
+     //결과창 오버레이
+     function overlay_Result()
+     {
+      $(".resultOverlay").css("visibility", "visible");
+      $('.resultOverlay').css('display', 'block');
+      $('.resultOverlay').css('opacity', '1');
+      $('.resultOverlay').css('z-index', '1');
+      $('.resultOverlay').css('background-color', 'rgba(0,0,0,0.75)');
+      $('.resultOverlay').css('position', 'absolute');
+      $('.resultOverlay').css('top', '0');
+      $('.resultOverlay').css('left', '0');
+      $('.resultOverlay').css('width', '100%');
+      $('.resultOverlay').css('height', '100%');
+      $('.resultOverlay').css('text-align', 'center');
+      $('.resultOverlay').css('vertical-align', 'middle');
+      $('.resultOverlay').css('line-height', '100%');
+      $('.resultOverlay').css('color', 'white');
+      $('.resultOverlay').css('font-family', 'Nanum Gothic');
+      $('.resultOverlay').css('font-weight', 'bold');
+      $('.resultOverlay').css('text-shadow', '0 0 10px black');
+
+      $(function(){$('.answerResult').append('<p>정답은 "'+ answer.building_Code + ' ' + answer.building_Name +'"입니다.</p>');});
+      if(tryCount != 7) $(function(){$('.tryCount').append('<p>시도 횟수는 '+ tryCount + '회입니다. 🎉</p>');});
+      else $(function(){$('.tryCount').append('<p>기회 내에 맞추지 못했습니다 😭</p>');});
+     }
+    //하는 방법 오버레이
+    function overlay_Howtoplay()
+    {
+      $(".howtoplayOverlay").css("visibility", "visible");
+      $('.howtoplayOverlay').css('display', 'block');
+      $('.howtoplayOverlay').css('opacity', '1');
+      $('.howtoplayOverlay').css('z-index', '1');
+      $('.howtoplayOverlay').css('background-color', 'rgba(0,0,0,0.75)');
+      $('.howtoplayOverlay').css('position', 'absolute');
+      $('.howtoplayOverlay').css('top', '0');
+      $('.howtoplayOverlay').css('left', '0');
+      $('.howtoplayOverlay').css('width', '100%');
+      $('.howtoplayOverlay').css('height', '100%');
+      $('.howtoplayOverlay').css('text-align', 'center');
+      $('.howtoplayOverlay').css('vertical-align', 'middle');
+      $('.howtoplayOverlay').css('line-height', '100%');
+      $('.howtoplayOverlay').css('color', 'white');
+      $('.howtoplayOverlay').css('font-family', 'Nanum Gothic');
+      $('.howtoplayOverlay').css('font-weight', 'bold');
+      $('.howtoplayOverlay').css('text-shadow', '0 0 10px black');
+    }
+
+
+     //공유
+    function fn_sendFB(sns) 
+    {
+      var thisUrl = document.URL;
+      var snsTitle;
+
+      if(tryCount == 7) snsTitle = answer.building_Code + ' ' + answer.building_Name + "을(를) 알아맞추지 못했습니다... 😭 당신은 충북대학교를 얼마나 잘 알고계신가요? #CBNUDle";
+      else snsTitle =  answer.building_Code + ' ' + answer.building_Name + "을(를) " + tryCount + "번 만에 알아맞췄습니다! 🎉 당신은 충북대학교를 얼마나 잘 알고계신가요? #CBNUDle";;
+
+      if( sns == 'facebook' ) 
+      {
+          var url = "http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(thisUrl);
+          window.open(url, "", "width=486, height=286");
+      }
+      else if( sns == 'twitter' ) 
+      {
+          var url = "http://twitter.com/share?url="+encodeURIComponent(thisUrl)+"&text="+encodeURIComponent(snsTitle);
+          window.open(url, "tweetPop", "width=486, height=286,scrollbars=yes");
+      }
+    }
+    </script>
+</body>
+</html>
