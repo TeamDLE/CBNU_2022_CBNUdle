@@ -142,6 +142,7 @@
     <h1 style="color:white; font-weight: bolder; margin-top: 5%;">끝났습니다!</h1>
     <span class="answerResult"></span>
     <span class="tryCount"></span>
+    <input class="button" onclick="goto_BuildingInfo()" value="건물정보 보기" style="margin-top: 1%;"/>
     <input class="button" onclick="location.reload()" value="다시하기" style="margin-top: 1%;"/>
 		<ul class="icons" style="margin-top: 1%;">
       <a href="#n" onclick="fn_sendFB('facebook');return false;" class="icon brands style2 fa-facebook-f" target="_self" title="페이스북 공유" style="margin-right: 1%;"></a>
@@ -166,6 +167,7 @@
 					<footer class="wrapper style1 align-center">
 						<div class="inner">
 							<p style="margin-top: 5%;">&copy; CBNUdle,  <a href="https://github.com/TeamDLE">team DLE</a>.</p>
+              <p>CBNUDle은 Chrome 브라우저에 최적화되어있습니다.</p>
 						</div>
 					</footer>
 
@@ -228,7 +230,11 @@
           //정답이거나 기회가 소진되면 결과창이 overlay 된다.
           //결과 -> 공유, 다시하기, 건물정보 보기
         }
-
+    function goto_BuildingInfo()
+    {
+      var building_info = "page/building/"+answer.building_Code+".html";
+      window.location.href = building_info;
+    }
      //결과창 오버레이
      function overlay_Result()
      {
