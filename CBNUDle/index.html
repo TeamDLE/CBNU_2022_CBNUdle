@@ -53,7 +53,16 @@
       //건물 이미지 로딩
       let buildingImage = '<img src="PhotoSet/'+ answer.building_Code.toLowerCase() +'/01.jpg" width="80%" height="auto" />';
 
+	  //여러 각도의 이미지 추가
+      let buildingImage01 = '<img src="Picture/'+ answer.building_Code.toLowerCase() +'/01.jpg" width="80%" height="auto" />';
+      let buildingImage02 = '<img src="Picture/'+ answer.building_Code.toLowerCase() +'/02.jpg" width="80%" height="auto" />';
+      let buildingImage03 = '<img src="Picture/'+ answer.building_Code.toLowerCase() +'/03.jpg" width="80%" height="auto" />';
+
       $(function(){$('.building_image').append(buildingImage);});
+	  
+      $(function(){$('.building_image01').append(buildingImage01);});
+      $(function(){$('.building_image02').append(buildingImage02);});
+      $(function(){$('.building_image03').append(buildingImage03);});
       var tryCount = 1;
       
       //답을 고르고 정답인지 확인한다.
@@ -82,9 +91,37 @@
     아니면... 랜덤 건물사진을 가져와서 연속 정답?-->
 	
 	<p style="font-size: xx-large; font-weight: bolder;">여기는 어디일까요...</p>
-	<!-- Gallery -->
+	<!-- Gallery
+	
     <div class ="building_image">
     </div>
+	
+	-->
+	
+		<div class="gallery style2 xlarge lightbox onscroll-fade-in">
+			<article>
+				<a class="building_image">
+					<img class="building_image" width= "100%" height="auto" alt="" />
+				</a>
+			</article>
+			<article>
+				<a class="building_image01">
+					<img class="building_image01" width= "100%" height="auto" alt="" />
+				</a>
+			</article>
+			<article>
+				<a class="building_image02">
+					<img class="building_image02" width= "100%" height="auto" alt="" />
+				</a>
+			</article>
+			<article>
+				<a class="building_image03">
+					<img class="building_image03" width= "100%" height="auto" alt="" />
+				</a>
+			</article>
+		</div>
+
+</section>
 
 	<h6> </h6>
     <!--Try Section-->
@@ -175,6 +212,14 @@
 
 </div>
 
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+			
 
     <!-- 게임 스크립트 -->
     <script>
