@@ -49,7 +49,7 @@
       var randomKey = Math.floor(Math.random() * 29);
       var answer = building[randomKey]; //랜덤으로 정답을 하나 고른다.
       //건물 이미지 로딩
-      let buildingImage = '<img src="image/'+ answer.building_Code +'.png" height="300" width="600" />';
+      let buildingImage = '<img src="Picture/'+ answer.building_Code.toLowerCase() +'/01.jpg" height="300" width="600" />';
 
       $(function(){$('.building_image').append(buildingImage);});
       var tryCount = 1;
