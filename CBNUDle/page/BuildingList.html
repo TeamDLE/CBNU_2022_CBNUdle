@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="ko">
+<html>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <head>
-    <meta charsret="utf-8" />
     <title>Team DLE</title>
+    <meta charsret="utf-8"/>
+    <link rel="stylesheet" href="../style/building.css">
     <script>
       var building = 
         [
@@ -40,23 +41,24 @@
       {
         for (var i = 0; i < building.length; i++) 
         {
-          let temp_html = '<div class="listInner"><a href="building/' + building[i].Building_Code + '.html"><img src="../image/' + building[i].Building_Code + '.jpg" height="200" width="300" /></a><p>'+building[i].Building_Name+'<p></div>';
+          let temp_html = '<div class="listInner"><a href="building/' + building[i].Building_Code + '.html"><img src="../Picture/' + building[i].Building_Code.toLowerCase() + '/01.jpg" height="200" width="300" /></a><p>'+building[i].Building_Name+'<p></div>';
           $('.buildingList').append(temp_html);
+          if (i % 3 == 2)
+          {
+            $('.buildingList').append('<br>');
+          }
         }
       });
     </script>
-    <style>
-        body {
-          background: #1b2849
-        }
-    </style>
-    
 </head>
+<header>
+  <div class="goBack" type="button"><a href="../index.html"><img src="../image/back.png" height="50" width="50" /></a></div>
+  <div class="logo" style="display: inline-block; margin: auto;"><img src="../image/cbnudle.png" height="100" width="500" /></div>
+  <div class="building">Building List</div>
+  <hr align=left width=100% color=white SIZE=8>
+</header>
 <body>
-    <div class="main" type="button"><a href="../../index.html"><img src="../../image/2.jpg" height="50" width="50" /></a></div>
+    <div class="buildingList"> </div>
 
-    <div class="buildingList">
-
-    </div>
 </body>
 </html>
